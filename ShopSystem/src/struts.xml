@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 配置i18资源文件 -->
+	<constant name="struts.custom.i18n.resources" value="i18n"/>
+    <constant name="struts.devMode" value="true" />
+	<!-- 配置struts2通过Spring容器来创建action -->
+	<constant name="struts.objectFactory" value="spring" />
+    <package name="default" namespace="/" extends="struts-default" >
+    
+    <!-- 配置拦截器 -->
+    <interceptors>
+    	<!-- 配置自动登录拦截器 -->
+    	<interceptor name="autoLoginInterceptor" class="com.zhku.shopsystem.interceptor.AutoLoginInterceptor"></interceptor>
+    	<!-- 配置自定义拦截器栈 -->
+    	<interceptor-stack name="myDefaultStack">
+    		<interceptor-ref name="autoLoginInterceptor">
+    			<param name="excludeMethods">login,logout</param>
+    		</interceptor-ref>
+    		<interceptor-ref name="defaultStack"></interceptor-ref>
+    	</interceptor-stack>
+    </interceptors>
+    <!-- 配置默认拦截器栈 -->
+    <default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+	<!-- 配置默认Action,当找不到对应action的时候,访问默认的Action -->
+    	<default-action-ref name="index"></default-action-ref>
+    	<!-- 配置首页访问的Action -->
+    	<action name="index" class="indexAction" >
+    		<result name="index">/WEB-INF/jsp/index.jsp</result>
+    	</action>
+    	<!-- 配置User模块的Action -->
+    	<action name="user_*" method="{1}" class="userAction">
+    		<result name="registPage">/WEB-INF/jsp/regist.jsp</result>
+    		<result name="loginPage">/WEB-INF/jsp/login.jsp</result>
+    		<result name="success">/WEB-INF/jsp/msg.jsp</result>
+    		<result name="registInput">/WEB-INF/jsp/regist.jsp</result>
+    		<result name="loginInput">/WEB-INF/jsp/login.jsp</result>
+    		<result name="loginSuccess" type="redirectAction">
+    			<param name="actionName">index</param>
+    			<param name="namespace">/</param>
+    		</result>
+    		<result name="logoutSuccess" type="redirectAction">
+    			<param name="actionName">user_loginPage</param>
+    			<param name="namespace">/</param>
+    		</result>
+    	</action>
+    	
+    </package>
+
+
+</struts>

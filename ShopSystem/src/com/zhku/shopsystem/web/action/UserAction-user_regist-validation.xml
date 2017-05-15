@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+
+  		
+<validators>
+	
+	<field name="username">
+		<field-validator type="requiredstring">
+			<message key="error.username.requiredstring"></message>
+		</field-validator>
+		<field-validator type="stringlength">
+             <param name="minLength">3</param>
+             <param name="maxLength">20</param>
+             <message key="error.username.stringlength"></message>
+        </field-validator>
+        <field-validator type="regex">
+			<param name="regexExpression"><![CDATA[(^[a-zA-Z\d_]+$)]]></param>
+			<message key="error.username.isUsername"></message>
+		</field-validator>
+        
+	</field>
+	
+	<field name="password">
+		<field-validator type="requiredstring">
+			<message key="error.password.requiredstring"></message>
+		</field-validator>
+		<field-validator type="stringlength">
+             <param name="minLength">3</param>
+             <param name="maxLength">15</param>
+             <message key="error.password.stringlength"></message>
+        </field-validator>
+        <field-validator type="fieldexpression">
+			<param name="expression"><![CDATA[password.equals(rePassword)]]></param>
+			<message key="error.password.equal"></message>
+        </field-validator>
+	</field>
+	
+	<field name="rePassword">
+		<field-validator type="requiredstring">
+			<message key="error.repassword.requiredstring"></message>
+		</field-validator>
+		<field-validator type="stringlength">
+             <param name="minLength">3</param>
+             <param name="maxLength">15</param>
+             <message key="error.password.stringlength"></message>
+        </field-validator>
+        <field-validator type="fieldexpression">
+			<param name="expression"><![CDATA[rePassword.equals(password)]]></param>
+			<message key="error.password.equal"></message>
+        </field-validator>
+	</field>
+	
+	<field name="email">
+		<field-validator type="requiredstring">
+			<message key="error.email.requiredstring"></message>
+		</field-validator>
+		
+		<field-validator type="email">
+     		 <message key="error.email.email"></message>
+   		</field-validator>
+	</field>
+	
+	<field name="name">
+		<field-validator type="requiredstring">
+			<message key="error.name.requiredstring"></message>
+		</field-validator>
+	</field>
+	
+	<field name="sex">
+		<field-validator type="required">
+			<message key="error.sex.required"></message>
+		</field-validator>
+	</field>
+	
+	
+	<field name="birthday">
+		<field-validator type="required">
+			<message key="error.birthday.required"></message>
+		</field-validator>
+	</field>
+	
+	<field name="addr">
+		<field-validator type="requiredstring">
+			<message key="error.addr.requiredstring"></message>
+		</field-validator>
+	</field>
+	
+	<field name="phone">
+		<field-validator type="requiredstring">
+			<message key="error.phone.requiredstring"></message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="regexExpression"><![CDATA[(^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$)]]></param>
+			<message key="error.phone.isMobile"></message>
+		</field-validator>
+	</field>
+
+</validators>
