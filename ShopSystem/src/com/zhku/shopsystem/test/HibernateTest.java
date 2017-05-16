@@ -2,6 +2,8 @@ package com.zhku.shopsystem.test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -19,6 +21,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.sun.org.apache.xml.internal.security.Init;
+import com.zhku.shopsystem.dao.CategoryDao;
+import com.zhku.shopsystem.domain.Category;
+import com.zhku.shopsystem.domain.CategorySecond;
+import com.zhku.shopsystem.domain.Product;
+import com.zhku.shopsystem.domain.Seller;
 import com.zhku.shopsystem.domain.User;
 import com.zhku.shopsystem.utils.MD5Utils;
 
@@ -30,10 +37,14 @@ import com.zhku.shopsystem.utils.MD5Utils;
 public class HibernateTest {
 	@Resource(name="sessionFactory")
 	private SessionFactory sessionFactory;
+
+	@Resource(name="categoryDao")
+	private CategoryDao categoryDao;
 	
 	private Session session;
 	
 	private Transaction transaction;
+	
 	
 	
 	@Before
@@ -76,6 +87,57 @@ public class HibernateTest {
 		System.out.println(obj);
 	}
 	
+	@Test
+	public void testGetAllCategory(){
+		
+		List<Category> categories = categoryDao.getAll();
+		System.out.println(categories.size());
+	}
+	
+	@Test
+	public void testGetCategory(){
+		Category category = session.get(Category.class, 1);
+		for(CategorySecond categorySecond:category.getCategoryseconds()){
+			System.out.println(categorySecond);
+		}
+	}
+	
+	@Test
+	public void testGetCategorySecond(){
+		CategorySecond categorySecond=session.get(CategorySecond.class, 1);
+		
+		System.out.println(categorySecond.getCategory().getCname());
+		
+		for(Product product:categorySecond.getProducts()){
+			
+			System.out.println(product.getPname());
+			
+		}
+	}
+	
+	@Test
+	public void testGetSeller(){
+		Seller seller = session.get(Seller.class, 1);
+		System.out.println(seller);
+		Set<Product> products = seller.getProducts();
+		for(Product product:products){
+			
+			System.out.println(product.getPname());
+			
+		}
+	}
+	
+	@Test
+	public void testGetProduct(){
+		
+		Product product=session.get(Product.class, 1);
+		Seller seller = product.getSeller();
+		CategorySecond categorySecond = product.getCategorySecond();
+		
+		System.out.println(seller);
+		
+		System.out.println(categorySecond);
+	}
 	
 	@After
 	public void destory(){

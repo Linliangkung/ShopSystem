@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-16 15:12:24 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.zhku.shopsystem.domain">
+    <class name="Seller" table="sellers">
+        <id name="sid" type="java.lang.Integer">
+            <column name="sid" />
+            <generator class="native" />
+        </id>
+        <property name="saccount" type="java.lang.String">
+            <column name="saccount" />
+        </property>
+        <property name="spassword" type="java.lang.String">
+            <column name="spassword" />
+        </property>
+        <property name="sname" type="java.lang.String">
+            <column name="sname" />
+        </property>
+        <property name="sphone" type="java.lang.String">
+            <column name="sphone" />
+        </property>
+        <property name="sdesc" type="java.lang.String">
+            <column name="sdesc" />
+        </property>
+        <property name="registdate" type="date" >
+            <column name="registdate" />
+        </property>
+        
+          <!-- 映射一对多的关系:二级分类下所有商品 -->
+        <set name="products" table="products" inverse="true" >
+        	<key column="sid"/>
+        	<one-to-many class="Product"/>
+        </set>
+        
+    </class>
+</hibernate-mapping>

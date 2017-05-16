@@ -31,4 +31,7 @@ public interface BaseDao<T> {
 	
 	//根据离线条件查询对象
 	T getByDetachedCriteria(DetachedCriteria criteria);
+	
+	//查询全部记录
+	List<T> getAll();
 }

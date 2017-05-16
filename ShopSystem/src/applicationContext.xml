@@ -6,6 +6,7 @@
 
 	<!-- action的配置 -->
 	<bean name="indexAction" class="com.zhku.shopsystem.web.action.IndexAction" scope="prototype">
+		<property name="categoryService" ref="categoryService"></property>
 	</bean>
 	<bean name="userAction" class="com.zhku.shopsystem.web.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService"></property>
@@ -15,9 +16,17 @@
 	<bean name="userService" class="com.zhku.shopsystem.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao"></property>
 	</bean>
-
+	
+	<bean name="categoryService" class="com.zhku.shopsystem.service.impl.CategoryServiceImpl">
+		<property name="categoryDao" ref="categoryDao"></property>
+	</bean>
+	
 	<!-- dao的配置 -->
 	<bean name="userDao" class="com.zhku.shopsystem.dao.impl.UserDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean name="categoryDao" class="com.zhku.shopsystem.dao.impl.CategoryDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 引入数据库配置 -->

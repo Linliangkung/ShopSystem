@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-16 15:12:24 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.zhku.shopsystem.domain">
+    <class name="Product" table="products">
+        <id name="pid" type="java.lang.Integer">
+            <column name="pid" />
+            <generator class="native" />
+        </id>
+        <property name="pname" type="java.lang.String">
+            <column name="pname" />
+        </property>
+        <property name="market_price" type="java.lang.Double">
+            <column name="market_price" />
+        </property>
+        <property name="shop_price" type="java.lang.Double">
+            <column name="shop_price" />
+        </property>
+        <property name="imageurl" type="java.lang.String">
+            <column name="imageurl" />
+        </property>
+        <property name="pnum" type="java.lang.Integer">
+            <column name="pnum" />
+        </property>
+        <property name="pdesc" type="java.lang.String">
+            <column name="pdesc" />
+        </property>
+        <property name="is_hot" type="java.lang.Character">
+            <column name="is_hot" />
+        </property>
+        <property name="pdate" type="java.util.Date">
+            <column name="pdate" />
+        </property>
+        <many-to-one name="categorySecond" class="CategorySecond" column="csid"/>
+        <many-to-one name="seller" class="Seller" column="sid"/>
+    </class>
+</hibernate-mapping>

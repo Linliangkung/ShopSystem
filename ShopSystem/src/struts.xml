@@ -15,8 +15,13 @@
     <interceptors>
     	<!-- 配置自动登录拦截器 -->
     	<interceptor name="autoLoginInterceptor" class="com.zhku.shopsystem.interceptor.AutoLoginInterceptor"></interceptor>
+    	<!-- 配置初始化一级分类拦截器 -->
+    	<interceptor name="initCategoryInterceptor" class="com.zhku.shopsystem.interceptor.InitCategoryInterceptor"></interceptor>
     	<!-- 配置自定义拦截器栈 -->
     	<interceptor-stack name="myDefaultStack">
+    		<interceptor-ref name="initCategoryInterceptor">
+    			<param name="includeMethods">registPage,loginPage,index</param>
+    		</interceptor-ref>
     		<interceptor-ref name="autoLoginInterceptor">
     			<param name="excludeMethods">login,logout</param>
     		</interceptor-ref>
@@ -28,7 +33,7 @@
 	<!-- 配置默认Action,当找不到对应action的时候,访问默认的Action -->
     	<default-action-ref name="index"></default-action-ref>
     	<!-- 配置首页访问的Action -->
-    	<action name="index" class="indexAction" >
+    	<action name="index" class="indexAction" method="index">
     		<result name="index">/WEB-INF/jsp/index.jsp</result>
     	</action>
     	<!-- 配置User模块的Action -->

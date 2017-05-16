@@ -84,6 +84,12 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 		return null;
 	}
 
+	@Override
+	public List<T> getAll() {
+		DetachedCriteria criteria=DetachedCriteria.forClass(clazz);
+		return (List<T>) getHibernateTemplate().findByCriteria(criteria);
+	}
+
 	
 
 }

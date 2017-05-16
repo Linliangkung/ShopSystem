@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-16 11:44:23 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.zhku.shopsystem.domain">
+    <class name="Category" table="categorys">
+    
+        <id name="cid" type="java.lang.Integer">
+            <column name="cid" />
+            <generator class="native" />
+        </id>
+        
+        <property name="cname" type="java.lang.String" >
+            <column name="cname" length="30"/>
+        </property>
+        
+        <set name="categoryseconds" table="categoryseconds" inverse="true" order-by="csid asc">
+        	<key column="cid"></key>
+        	<one-to-many class="CategorySecond" />
+        </set>
+    </class>
+    
+</hibernate-mapping>
