@@ -51,7 +51,15 @@
         <url-pattern>/Kaptcha.jpg</url-pattern>
     </servlet-mapping>
 	
-	
+	<!-- 配置OpenSessionInViewFilter过滤器,使Hibernate的Session的生命周期延长到jsp页面 -->
+	<filter>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>OpenSessionInViewFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	<!-- 配置Struts核心过滤器 -->
 	<filter>
 		<filter-name>struts2</filter-name>

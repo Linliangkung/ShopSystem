@@ -1,13 +1,23 @@
 package com.zhku.shopsystem.test;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.activation.MimeType;
+import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.Resource;
 
+import org.apache.catalina.ha.backend.Sender;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,14 +30,16 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sun.org.apache.xml.internal.security.Init;
+import com.sun.scenario.effect.impl.prism.PrImage;
 import com.zhku.shopsystem.dao.CategoryDao;
 import com.zhku.shopsystem.domain.Category;
 import com.zhku.shopsystem.domain.CategorySecond;
 import com.zhku.shopsystem.domain.Product;
 import com.zhku.shopsystem.domain.Seller;
 import com.zhku.shopsystem.domain.User;
+import com.zhku.shopsystem.service.ProductService;
 import com.zhku.shopsystem.utils.MD5Utils;
+import com.zhku.shopsystem.utils.PageHibernateCallback;
 
 
 
@@ -40,6 +52,9 @@ public class HibernateTest {
 
 	@Resource(name="categoryDao")
 	private CategoryDao categoryDao;
+	
+	@Resource(name="productService")
+	private ProductService productService;
 	
 	private Session session;
 	
@@ -137,6 +152,75 @@ public class HibernateTest {
 		System.out.println(seller);
 		
 		System.out.println(categorySecond);
+	}
+	
+	@Test
+	public void addSellers(){
+		for(int i=1;i<=7;i++){
+			Seller seller=new Seller();
+			seller.setSaccount("abc"+i);
+			seller.setSpassword("123");
+			seller.setRegistdate(new Date());
+			seller.setSdesc("本商铺出售个种精美商铺");
+			seller.setSname("大妹丸子"+i);
+			seller.setSphone("13143350142");
+			
+			session.save(seller);
+		}
+	}
+	
+	@Test
+	public void addProducts(){
+		for(int i=41;i<=100;i++){
+			Product product=new Product();
+			product.setImageurl("/WEB-INF/products/cs30006.png");
+			product.setIs_hot('0');
+			product.setMarket_price(100d);
+			product.setPdate(new Date(System.currentTimeMillis()+i));
+			product.setPname("商品"+i);
+			product.setPnum(1000);
+			product.setShop_price(95d);
+			CategorySecond second=new CategorySecond();
+			second.setCsid(1);
+			product.setCategorySecond(second);
+			product.setPdesc("这是一个无与伦比的商品");
+			
+			session.save(product);
+		}
+	}
+	@Test
+	public void testGetProductOrderByPDateDesc(){
+		
+		List<Product> latestProducts = productService.getLatestProducts();
+	}
+	
+	
+	@Test
+	public void testGetProductCountByCid(){
+		
+		String hql="SELECT count(*) FROM Product p INNER JOIN p.categorySecond cs ON cs.category.cid=?";
+		Query query = session.createQuery(hql);
+		query.setInteger(0, 1);
+		Long count=(Long) query.uniqueResult();
+		System.out.println(count);
+		
+	}
+	
+	@Test 
+	public void testGetPageProductByCid(){
+		
+		String hql="SELECT p FROM Product p INNER JOIN p.categorySecond cs ON cs.category.cid=?";
+		Query query = session.createQuery(hql);
+		query.setInteger(0, 1);
+		query.setMaxResults(12);
+		query.setFirstResult(0);
+		
+		List<Product> list = query.list();
+		
+		for(Product product:list){
+			System.out.println(product.getPname());
+		}
+		
 	}
 	
 	@After

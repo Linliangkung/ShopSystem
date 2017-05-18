@@ -4,6 +4,7 @@ import javax.mail.MessagingException;
 
 import org.junit.Test;
 
+import com.zhku.shopsystem.utils.FileUtils;
 import com.zhku.shopsystem.utils.MailUtils;
 import com.zhku.shopsystem.utils.UUIDUtils;
 
@@ -31,5 +32,12 @@ public class TestUtils {
 		
 		System.out.println(url);
 	}	
+	
+	@Test 
+	public void testFileUtilsGetContentType(){
+		
+		System.out.println(FileUtils.getContentType("11.ico"));
+		
+	}
 	
 }

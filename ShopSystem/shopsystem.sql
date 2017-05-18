@@ -6,7 +6,7 @@ create table users(
 	email varchar(30),		#用户邮箱
 	phone varchar(30),		#用户手机号码
 	addr varchar(30),		#用户收货地址
-	sex char(1),			#用户性别:1代表男,代表女
+	sex char(1),			#用户性别:1代表男,0代表女
 	birthday date,			#用户生日
 	state int,				#用户激活状态:1代表激活,0代表未激活
 	code varchar(64)		#用户激活码
@@ -42,7 +42,7 @@ create table products(
 	imageurl varchar(200), #商品图片对象的url地址
 	pnum int(11), 		#商品的库存 
 	pdesc varchar(200), #商品的描述
-	is_hot char(1),	#是否是热门商品:1.代表是热门商品,2.代表不是热门商品
+	is_hot char(1),	#是否是热门商品:1.代表是热门商品,0.代表不是热门商品
 	pdate datetime, #商品上架时间
 	csid int(11),  #商品对应的二级分类id
 	sid	 int(11),   #商品属于的商户id

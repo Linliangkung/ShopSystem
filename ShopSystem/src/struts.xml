@@ -20,7 +20,7 @@
     	<!-- 配置自定义拦截器栈 -->
     	<interceptor-stack name="myDefaultStack">
     		<interceptor-ref name="initCategoryInterceptor">
-    			<param name="includeMethods">registPage,loginPage,index</param>
+    			<param name="includeMethods">registPage,loginPage,index,category</param>
     		</interceptor-ref>
     		<interceptor-ref name="autoLoginInterceptor">
     			<param name="excludeMethods">login,logout</param>
@@ -51,6 +51,14 @@
     			<param name="actionName">user_loginPage</param>
     			<param name="namespace">/</param>
     		</result>
+    	</action>
+    	<!-- 配置加载WEB-INF目录下图片的Action -->
+    	<action name="loadProductImage" class="loadProductImageAction" method="loadProductImage">
+    		<result>${filePath}</result>
+    	</action>
+    	<!-- 配置显示一级分类详情的Action -->
+    	<action name="category" class="categoryAction" method="category">
+    		<result>/WEB-INF/jsp/category.jsp</result>
     	</action>
     	
     </package>

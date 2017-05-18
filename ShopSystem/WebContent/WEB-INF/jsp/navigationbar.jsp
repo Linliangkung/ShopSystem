@@ -10,7 +10,7 @@
 					
 					<s:iterator value="#session.categories">
 						<li>
-							<a ><s:property value="cname"/></a>
+							<a href="${pageContext.request.contextPath }/category.action?cid=<s:property value="cid"/>&page=1"><s:property value="cname"/></a>
 							|
 						</li>
 					</s:iterator>					
