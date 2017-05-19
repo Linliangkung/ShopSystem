@@ -20,7 +20,7 @@
     	<!-- 配置自定义拦截器栈 -->
     	<interceptor-stack name="myDefaultStack">
     		<interceptor-ref name="initCategoryInterceptor">
-    			<param name="includeMethods">registPage,loginPage,index,category</param>
+    			<param name="includeMethods">registPage,loginPage,index,category,detail,categorySecond</param>
     		</interceptor-ref>
     		<interceptor-ref name="autoLoginInterceptor">
     			<param name="excludeMethods">login,logout</param>
@@ -59,6 +59,15 @@
     	<!-- 配置显示一级分类详情的Action -->
     	<action name="category" class="categoryAction" method="category">
     		<result>/WEB-INF/jsp/category.jsp</result>
+    	</action>
+    	<!-- 配置显示二级分类详情的Action -->
+    	<action name="categorySecond" class="categorySecondAction" method="categorySecond">
+    		<result>/WEB-INF/jsp/categorySecond.jsp</result>
+    	</action>
+    	
+    	<!-- 配置Product模块的Action -->
+    	<action name="product_*" class="productAction" method="{1}">
+    		<result name="detailSuccess">/WEB-INF/jsp/productDetail.jsp</result>
     	</action>
     	
     </package>

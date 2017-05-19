@@ -86,8 +86,8 @@
 					<span class="previousPage">&nbsp;</span>
 				</s:if>
 				<s:else>
-					<a class="firstPage" href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=1">&nbsp;</a>
-					<a class="previousPage" href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=<s:property value="#productPageBean.currentPage-1"/>">&nbsp;</a>
+					<a class="firstPage" href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=1">&nbsp;</a>
+					<a class="previousPage" href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=<s:property value="#productPageBean.currentPage-1"/>">&nbsp;</a>
 				</s:else>
 				
 			</s:if>
@@ -98,7 +98,7 @@
 						<span class="currentPage"><s:property value="#i"/></span>
 					</s:if>
 					<s:else>
-						<a href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
+						<a href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
 					</s:else>
 				 </s:iterator>
 			</s:if>
@@ -109,7 +109,7 @@
 						<span class="currentPage"><s:property value="#i"/></span>
 					</s:if>
 					<s:else>
-						<a href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
+						<a href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
 					</s:else>
 				 </s:iterator>			
 				</s:if>		
@@ -119,7 +119,7 @@
 						<span class="currentPage"><s:property value="#i"/></span>
 					</s:if>
 					<s:else>
-						<a href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
+						<a href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
 					</s:else>
 				 </s:iterator>
 				</s:elseif>
@@ -129,7 +129,7 @@
 						<span class="currentPage"><s:property value="#i"/></span>
 					</s:if>
 					<s:else>
-						<a href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
+						<a href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=<s:property value="#i"/>">  <s:property value="#i"/></a>
 					</s:else>
 				 </s:iterator>
 				</s:else>
@@ -144,8 +144,8 @@
 					<span class="lastPage">&nbsp;</span>
 				</s:if>
 				<s:else>
-					<a class="nextPage" href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=<s:property value="#productPageBean.currentPage+1"/>">&nbsp;</a>
-					<a class="lastPage" href="${pageContext.request.contextPath}/category.action?cid=<s:property value="cid"/>&page=<s:property value="#productPageBean.totalPage"/>">&nbsp;</a>
+					<a class="nextPage" href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=<s:property value="#productPageBean.currentPage+1"/>">&nbsp;</a>
+					<a class="lastPage" href="${pageContext.request.contextPath}/categorySecond.action?csid=<s:property value="csid"/>&page=<s:property value="#productPageBean.totalPage"/>">&nbsp;</a>
 				</s:else>
 				
 			</s:if>

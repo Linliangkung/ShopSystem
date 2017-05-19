@@ -31,5 +31,14 @@ public interface ProductService {
 	 * @return
 	 */
 	PageBean getProductPageBeanByCid(Integer page, Integer pageSize,Integer cid);
+	
+	/**
+	 * 根据二级分类id和当前页数来获取商品的分页bean
+	 * @param page 	当前页数
+	 * @param pageSize 每页显示条数
+	 * @param csid	二级分类id
+	 * @return
+	 */
+	PageBean getProductPageBeanByCsid(Integer page, Integer pageSize, Integer csid);
 
 }

@@ -55,7 +55,7 @@
 						<ul class="tabContent" style="display: block;">
 								<s:iterator value="#hotProducts">
 									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/loadProductImage.action?pid=<s:property value="pid"/>" style="display: block;"></a>
+										<a  target="_blank" href="${pageContext.request.contextPath }/product_detail.action?pid=<s:property value="pid"/>" ><img src="${pageContext.request.contextPath}/loadProductImage.action?pid=<s:property value="pid"/>" style="display: block;"></a>
 									</li>
 								</s:iterator>
 						</ul>
@@ -137,7 +137,7 @@
 						<ul class="tabContent" style="display: block;">
 								<s:iterator value="#latestProducts">
 									<li>
-										<a  target="_blank"><img src="${pageContext.request.contextPath}/loadProductImage.action?pid=<s:property value="pid"/>" style="display: block;"></a>
+										<a  target="_blank" href="${pageContext.request.contextPath }/product_detail.action?pid=<s:property value="pid"/>" ><img src="${pageContext.request.contextPath}/loadProductImage.action?pid=<s:property value="pid"/>" style="display: block;"></a>
 									</li>
 								</s:iterator>
 						</ul>

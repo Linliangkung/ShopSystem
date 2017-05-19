@@ -3,11 +3,6 @@ package com.zhku.shopsystem.dao.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.criterion.DetachedCriteria;
-import org.springframework.orm.hibernate5.HibernateCallback;
 
 import com.zhku.shopsystem.dao.ProductDao;
 import com.zhku.shopsystem.domain.Product;
@@ -28,6 +23,24 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao {
 		return getHibernateTemplate().execute(new PageHibernateCallback<Product>(
 				hql, 
 				new Object[]{cid}, 
+				start,
+				pageSize));
+	}
+
+	@Override
+	public Integer getProductCountByCsid(Integer csid) {
+		String hql="SELECT count(*) FROM Product p WHERE p.categorySecond.csid=?";
+		List<Long> count= (List<Long>) getHibernateTemplate().find(hql, csid);
+		
+		return count.get(0).intValue();
+	}
+
+	@Override
+	public List<Product> getPageProductByCsid(Integer start, Integer pageSize, Integer csid) {
+		String hql="SELECT p FROM Product p WHERE p.categorySecond.csid=? ORDER BY p.pid asc";
+		return getHibernateTemplate().execute(new PageHibernateCallback<Product>(
+				hql, 
+				new Object[]{csid}, 
 				start,
 				pageSize));
 	}

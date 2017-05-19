@@ -19,6 +19,14 @@
 		<property name="productService" ref="productService"></property>
 		<property name="categoryService" ref="categoryService"></property>
 	</bean>
+	<bean name="productAction" class="com.zhku.shopsystem.web.action.ProductAction" scope="prototype">
+		<property name="productService" ref="productService"></property>
+		<property name="categoryService" ref="categoryService"></property>
+	</bean>
+	<bean name="categorySecondAction" class="com.zhku.shopsystem.web.action.CategorySecondAction" scope="prototype">
+		<property name="productService" ref="productService"></property>
+		<property name="categoryService" ref="categoryService"></property>
+	</bean>
 	
 	
 	<!-- service的配置 -->

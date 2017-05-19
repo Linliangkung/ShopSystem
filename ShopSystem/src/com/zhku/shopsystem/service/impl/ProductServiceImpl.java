@@ -7,6 +7,10 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.TrueFalseType;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zhku.shopsystem.dao.ProductDao;
 import com.zhku.shopsystem.domain.Product;
@@ -18,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
 	private ProductDao productDao;
 
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
 	public List<Product> getHotProduct() {
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(Product.class);
 		detachedCriteria.add(Restrictions.eq("is_hot", '1'));
@@ -26,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
 
 
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
 	public List<Product> getLatestProducts() {
 		DetachedCriteria detachedCriteria=DetachedCriteria.forClass(Product.class);
 		detachedCriteria.addOrder(Order.desc("pdate"));
@@ -33,17 +39,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
 	public Product getProductById(Integer pid) {
 
 		return productDao.getById(pid);
 	}
 	
-	public void setProductDao(ProductDao productDao) {
-		this.productDao = productDao;
-	}
-
-
+	
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
 	public PageBean getProductPageBeanByCid(Integer page, Integer pageSize,Integer cid) {
 		//获得一级分类的商品的总条数
 		Integer totalCount=productDao.getProductCountByCid(cid);
@@ -56,6 +60,31 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productPageBean;
 	}
+
+
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
+	public PageBean getProductPageBeanByCsid(Integer page, Integer pageSize, Integer csid) {
+		
+		//获得二级分类的商品的总条数
+		Integer totalCount=productDao.getProductCountByCsid(csid);
+		//创建PageBean
+		PageBean productPageBean=new PageBean(page, totalCount, pageSize);
+		//获得二级分类的商品的集合
+		List<Product> products=productDao.getPageProductByCsid(productPageBean.getStart(),productPageBean.getPageSize(),csid);
+		
+		productPageBean.setList(products);
+		
+		return productPageBean;
+	}
+	
+	
+	public void setProductDao(ProductDao productDao) {
+		this.productDao = productDao;
+	}
+
+
+
 
 
 	
