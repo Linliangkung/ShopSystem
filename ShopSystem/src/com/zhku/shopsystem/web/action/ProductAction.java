@@ -31,6 +31,12 @@ public class ProductAction extends ActionSupport implements ModelDriven<Product>
 	public Product getModel() {
 		return product;
 	}
+	
+	
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
 	public void setProductService(ProductService productService) {
 		this.productService = productService;

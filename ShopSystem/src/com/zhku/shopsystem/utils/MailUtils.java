@@ -93,6 +93,9 @@ public class MailUtils {
 		case "@sohu.com":
 			result="https://mail.sohu.com/fe/#/login";
 			break;
+		case "@2980.com":
+			result="https://www.2980.com/login?callback=/";
+			break;
 		}
 		return result;
 	}

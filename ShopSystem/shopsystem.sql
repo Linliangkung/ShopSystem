@@ -50,4 +50,13 @@ create table products(
 	foreign key (sid) references sellers (sid)
 );
 
+create table cartitems(
+	ciid int primary key auto_increment,#购物车项id 
+	quantity int,#购物车项的商品的数量
+	pid int,#商品id
+	uid int,#用户id 
+	foreign key (pid) references products (pid),
+	foreign key (uid) references users (uid)
+);
+
 

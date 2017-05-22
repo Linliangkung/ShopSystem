@@ -1,21 +1,13 @@
 package com.zhku.shopsystem.test;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-import javax.activation.MimeType;
-import javax.activation.MimetypesFileTypeMap;
 import javax.annotation.Resource;
 
-import org.apache.catalina.ha.backend.Sender;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -30,16 +22,16 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.sun.scenario.effect.impl.prism.PrImage;
 import com.zhku.shopsystem.dao.CategoryDao;
+import com.zhku.shopsystem.domain.CartItem;
 import com.zhku.shopsystem.domain.Category;
 import com.zhku.shopsystem.domain.CategorySecond;
 import com.zhku.shopsystem.domain.Product;
 import com.zhku.shopsystem.domain.Seller;
 import com.zhku.shopsystem.domain.User;
+import com.zhku.shopsystem.service.CartItemService;
 import com.zhku.shopsystem.service.ProductService;
 import com.zhku.shopsystem.utils.MD5Utils;
-import com.zhku.shopsystem.utils.PageHibernateCallback;
 
 
 
@@ -55,6 +47,8 @@ public class HibernateTest {
 	
 	@Resource(name="productService")
 	private ProductService productService;
+	@Resource(name="cartItemService")
+	private CartItemService cartItemService;
 	
 	private Session session;
 	
@@ -67,6 +61,7 @@ public class HibernateTest {
 		session=sessionFactory.openSession();
 		transaction=session.beginTransaction();
 	}
+	
 	@Test
 	public void testSaveUser(){
 		User user=new User();
@@ -222,6 +217,20 @@ public class HibernateTest {
 		}
 		
 	}
+	
+	@Test
+	public void testGetCartItem(){
+		Query query = session.createQuery("FROM CartItem c WHERE c.product.pid=? and c.user.uid=?");
+		query.setInteger(0, 2);
+		query.setInteger(1, 1);
+		
+		CartItem cartItem=(CartItem) query.uniqueResult();
+		System.out.println(cartItem.getQuantity());
+		cartItem.setQuantity(101);
+		
+		
+	}
+	
 	
 	@After
 	public void destory(){

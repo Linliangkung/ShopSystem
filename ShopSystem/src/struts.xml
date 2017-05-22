@@ -20,7 +20,7 @@
     	<!-- 配置自定义拦截器栈 -->
     	<interceptor-stack name="myDefaultStack">
     		<interceptor-ref name="initCategoryInterceptor">
-    			<param name="includeMethods">registPage,loginPage,index,category,detail,categorySecond</param>
+    			<param name="includeMethods">registPage,loginPage,index,category,detail,categorySecond,cartListPage</param>
     		</interceptor-ref>
     		<interceptor-ref name="autoLoginInterceptor">
     			<param name="excludeMethods">login,logout</param>
@@ -70,6 +70,16 @@
     		<result name="detailSuccess">/WEB-INF/jsp/productDetail.jsp</result>
     	</action>
     	
+    	<!-- 配置购物车模块的Action -->
+    	<action name="cart_*" method="{1}" class="cartAction">
+    		<result name="toCartList" type="redirectAction">
+    			<param name="actionName">cart_cartListPage</param>
+    			<param name="namespace">/</param>
+    		</result>
+    		<result name="chainToCartList" type="chain">cart_cartListPage</result>
+    		<result name="productDetail" type="chain">product_detail</result>
+    		<result name="cartListPage" >/WEB-INF/jsp/cart.jsp</result>
+    	</action>
     </package>
 
 

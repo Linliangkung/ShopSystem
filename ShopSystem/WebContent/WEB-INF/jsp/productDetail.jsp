@@ -13,7 +13,55 @@
 <script type="text/javascript" src="./js/jquery_004.js"></script>
 <script type="text/javascript" src="./js/jquery_003.js"></script>
 <script type="text/javascript" src="./js/common.js"></script> --%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript">
 
+	function change(num,pnum){
+		if(pnum==0){
+			result=0;
+		}else{
+		var value=parseInt($('#quantity').val());
+		var result=value+num;
+		if(result<1){
+			result=1
+		}else if(result>pnum){
+			result=pnum;
+		}
+		}
+		$('#quantity').val(result);
+	}
+	
+	function isSubmit(pnum){
+		var value=parseInt($('#quantity').val());
+		if(value>pnum){
+			alert("数量超出库存");
+			return false;
+		}
+		if(pnum<=0){
+			alert("库存不足");
+			return false;
+		}
+		return true;
+	}
+
+	function isRight(quantity,value,pnum){
+		if(pnum==0){
+			quantity.value=0;			
+		}else{
+		if(value<1){
+			quantity.value=1;
+		}else if(value>pnum){
+			quantity.value=pnum;
+		}
+		}
+	}
+	
+	<s:if test="[2].actionErrors[0]!=null">
+	$(document).ready(function(){ 
+			alert("<s:property value="[2].actionErrors[0]"/>")
+		}); 
+	</s:if>
+</script>
 
 </head>
 <body>
@@ -61,7 +109,7 @@
 			</div>
 			<div class="name"><s:property value="#detailProduct.pname"/></div>
 			<div class="sn">
-				<div>编号：<s:property value="#detailProduct.pid"/></div>
+				<div>所属商家：<s:property value="#detailProduct.seller.sname"/></div>
 			</div>
 			<div class="info">
 				<dl>
@@ -76,6 +124,8 @@
 						<dt>促销:</dt>
 						<dd>
 								<a target="_blank" title="限时抢购 (2014-07-30 ~ 2015-01-01)">限时抢购</a>
+								&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp库存：
+								<s:property value="#detailProduct.pnum"/>/件
 						</dd>
 					</dl>
 					<dl>
@@ -85,15 +135,16 @@
 						</dd>
 					</dl>
 			</div>
+				<form action="${pageContext.request.contextPath }/cart_addCartItem.action" method="post" onsubmit="return isSubmit(<s:property value="#detailProduct.pnum"/>)">
+				<input type="hidden" value="<s:property value="#detailProduct.pid"/>" name="product.pid"/>
 				<div class="action">
-					
 						<dl class="quantity">
 							<dt>购买数量:</dt>
 							<dd>
-								<input id="quantity" name="quantity" value="1" maxlength="4" onpaste="return false;" type="text">
+								<input id="quantity" name="quantity" value="<s:property value="#detailProduct.pnum==0?0:1"/>" maxlength="4" onpaste="return false;" type="text" onblur="isRight(this,this.value,<s:property value="#detailProduct.pnum"/>)">
 								<div>
-									<span id="increase" class="increase">&nbsp;</span>
-									<span id="decrease" class="decrease">&nbsp;</span>
+									<span id="increase" class="increase" onclick="change(1,<s:property value="#detailProduct.pnum"/>)">&nbsp;</span>
+									<span id="decrease" class="decrease" onclick="change(-1,<s:property value="#detailProduct.pnum"/>)">&nbsp;</span>
 								</div>
 							</dd>
 							<dd>
@@ -101,10 +152,10 @@
 							</dd>
 						</dl>
 					<div class="buy">
-							<input id="addCart" class="addCart" value="加入购物车" type="button">
-				
+							<input id="addCart" class="addCart" value="加入购物车" type="submit" /> 
 					</div>
 				</div>
+				</form>
 			<div id="bar" class="bar">
 				<ul>
 						<li id="introductionTab">

@@ -1,5 +1,9 @@
 package com.zhku.shopsystem.test;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.mail.MessagingException;
 
 import org.junit.Test;
@@ -32,6 +36,22 @@ public class TestUtils {
 		
 		System.out.println(url);
 	}	
+	
+	@Test
+	public void testMap(){
+		HashMap<Integer,String> hashMap=new LinkedHashMap<Integer,String>();
+		
+		hashMap.put(2, "蔡佳欣");
+		hashMap.put(1, "林良劲");
+		hashMap.put(3, "黄晓明");
+		hashMap.put(4, "baby");
+		
+		for(Map.Entry<Integer,String> entry:hashMap.entrySet()){
+			System.out.println(entry);
+		}
+		
+		
+	}
 	
 	@Test 
 	public void testFileUtilsGetContentType(){

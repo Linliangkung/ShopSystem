@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false)
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false,rollbackFor=MessageException.class)
 	public void active(String code) throws MessageException {
 		DetachedCriteria criteria = DetachedCriteria.forClass(User.class);
 		criteria.add(Restrictions.eq("code", code));
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true,rollbackFor=MessageException.class)
 	public User login(String username, String password) throws MessageException {
 		//根据用户名或者邮箱
 		DetachedCriteria criteria=DetachedCriteria.forClass(User.class);
