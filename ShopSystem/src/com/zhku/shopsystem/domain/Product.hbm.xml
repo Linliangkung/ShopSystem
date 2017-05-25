@@ -8,6 +8,7 @@
             <column name="pid" />
             <generator class="native" />
         </id>
+       <version name="version" type="integer" column="version"/> 
         <property name="pname" type="java.lang.String">
             <column name="pname" />
         </property>

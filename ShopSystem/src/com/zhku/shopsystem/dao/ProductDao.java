@@ -37,5 +37,11 @@ public interface ProductDao extends BaseDao<Product> {
 	 * @return
 	 */
 	List<Product> getPageProductByCsid(Integer start, Integer pageSize, Integer csid);
+	/**
+	 * 根据商品id，在ShareMode下查询商品
+	 * @param pid 商品id
+	 * @return
+	 */
+	Product getByIdInShareMode(Integer pid);
 
 }

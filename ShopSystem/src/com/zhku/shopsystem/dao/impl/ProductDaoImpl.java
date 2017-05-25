@@ -3,6 +3,8 @@ package com.zhku.shopsystem.dao.impl;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 
 import com.zhku.shopsystem.dao.ProductDao;
 import com.zhku.shopsystem.domain.Product;
@@ -43,5 +45,10 @@ public class ProductDaoImpl extends BaseDaoImpl<Product> implements ProductDao {
 				new Object[]{csid}, 
 				start,
 				pageSize));
+	}
+
+	@Override
+	public Product getByIdInShareMode(Integer pid) {
+		 return getHibernateTemplate().get(Product.class,pid, LockMode.PESSIMISTIC_READ);
 	}
 }

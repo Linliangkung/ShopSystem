@@ -59,4 +59,27 @@ create table cartitems(
 	foreign key (uid) references users (uid)
 );
 
+create table orders(
+	oid varchar(100) primary key,#订单id,使用uuid
+	total double,#订单金额
+	ordertime datetime,#订单下单时间
+	state int,#订单状态:0.代表未支付或待支付 1.未发货或已支付 2.已发货或待收货 3.确认收货
+	addr varchar(30),#收货地址
+	phone varchar(30),#收货电话
+	uid int,#用户id
+	sid int,#商户id
+	foreign key (uid) references users (uid),
+	foreign key (sid) references sellers (sid)
+);
+
+create table orderitems(
+	oiid int primary key auto_increment,#订单项id
+	quantity int ,#订单项中的商品的数量
+	subtotal double,#订单的小计
+	pid int,#商品id
+	oid varchar(100),#订单id
+	foreign key (pid) references products (pid),
+	foreign key (oid) references orders (oid)
+);
+
 

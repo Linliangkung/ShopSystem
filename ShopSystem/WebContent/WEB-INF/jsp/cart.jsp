@@ -17,7 +17,17 @@ $(document).ready(function(){
 		alert("<s:property value="[2].actionErrors[0]"/>")
 	}); 
 </s:if>
-
+	function submitOrder(){
+		if($('#lowstocks').length>0){
+			//说明存在库存不足的商品,提示用户商品库存不足,不允许生成订单			
+			alert("商品库存不足,请检查购物车");	
+		}else{
+			//说明当前商品的库存都充足
+			window.location.href="${pageContext.request.contextPath}/order_addOrder.action";
+		}
+	}
+	
+	
 </script>
 
 </head>
@@ -65,7 +75,12 @@ $(document).ready(function(){
 								<a href="${pageContext.request.contextPath }/product_detail?pid=<s:property value="product.pid"/>"><s:property value="product.pname"/></a>
 							</td>
 							<td>
-								<s:property value="product.pnum"/>
+								<s:if test="product.pnum==0">
+									<font id="lowstocks" color="red">库存不足</font>
+								</s:if>
+								<s:else>
+									<s:property value="product.pnum"/>
+								</s:else>
 							</td>
 							<td>
 								￥<s:property value="product.shop_price"/>
@@ -94,7 +109,7 @@ $(document).ready(function(){
 				</div>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/cart_deleteAll" id="clear" class="clear">清空购物车</a>
-					<a href="./会员登录.htm" id="submit" class="submit">提交订单</a>
+					<a href="javascript:void(0);" onclick="submitOrder();" id="submit" class="submit">提交订单</a>
 				</div>
 		</div>
 	</div>

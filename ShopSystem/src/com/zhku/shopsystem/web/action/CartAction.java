@@ -51,36 +51,9 @@ public class CartAction extends ActionSupport implements ModelDriven<CartItem>{
 	public String cartListPage(){
 		//1.从session中,获取当前用户
 		User existUser=(User) ActionContext.getContext().getSession().get("existUser");
-		//2.调用cartItemService根据用户的id查询出所有购物车项
-		List<CartItem> cartItems=cartItemService.getCartItemsByUid(existUser.getUid());
-		//3.封装购物车对象
-		Map<Integer,List<CartItem>> cart=new HashMap<Integer,List<CartItem>>();
-		for(CartItem cartItem:cartItems){
-			Integer sid=cartItem.getProduct().getSeller().getSid();
-			//先判断购物车中是否已经存在对应商家的商品
-			if(cart.containsKey(sid)){
-				//如果存在
-				List<CartItem> cartItemList = cart.get(sid);
-				if(cartItemList!=null){
-					cartItemList.add(cartItem);
-				}
-			}else{
-				//如果不存在
-				List<CartItem> cartItemList=new ArrayList<CartItem>();
-				cartItemList.add(cartItem);
-				cart.put(sid, cartItemList);
-			}
-		}
-		Double totalMoney=0d;
-		for(CartItem cartItem:cartItems){
-			Double money=cartItem.getProduct().getShop_price()*cartItem.getQuantity();
-			totalMoney=totalMoney+money;
-		}
-		
-		Cart cartBean=new Cart();
-		cartBean.setCart(cart);
-		cartBean.setTotalMoney(totalMoney);
-		
+		//2.调用cartService获得购物车封装对象
+		Cart cartBean =cartItemService.getCartBeanByUid(existUser.getUid());
+		//3.将购物车封装对象存到ActionContext域中
 		ActionContext.getContext().put("cartBean", cartBean);
 		return "cartListPage";
 	}

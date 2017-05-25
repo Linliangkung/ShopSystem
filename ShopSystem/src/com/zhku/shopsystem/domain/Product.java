@@ -20,8 +20,9 @@ package com.zhku.shopsystem.domain;
 
 import java.util.Date;
 
-public class Product {
+public class Product{
 	private Integer pid;
+	private Integer version;
 	private String pname;
 	private Double market_price;
 	private Double shop_price;
@@ -37,6 +38,12 @@ public class Product {
 	}
 	public void setPid(Integer pid) {
 		this.pid = pid;
+	}
+	public Integer getVersion() {
+		return version;
+	}
+	public void setVersion(Integer version) {
+		this.version = version;
 	}
 	public String getPname() {
 		return pname;

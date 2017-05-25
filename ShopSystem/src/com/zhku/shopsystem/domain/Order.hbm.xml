@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-5-24 14:50:39 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.zhku.shopsystem.domain">
+    <class name="Order" table="orders">
+        <id name="oid" type="java.lang.String">
+            <column name="oid" />
+            <generator class="uuid" />
+        </id>
+        <property name="total" type="java.lang.Double">
+            <column name="total" />
+        </property>
+        <property name="ordertime" type="timestamp">
+            <column name="ordertime" />
+        </property>
+        <property name="state" type="java.lang.Integer">
+            <column name="state" />
+        </property>
+        <property name="addr" type="java.lang.String">
+            <column name="addr" />
+        </property>
+        <property name="phone" type="java.lang.String">
+            <column name="phone" />
+        </property>
+        <many-to-one name="user" class="User" column="uid"/>
+        <many-to-one name="seller" class="Seller" column="sid"/>
+        <set name="orderItems" table="orderitems" inverse="true" order-by="oiid asc" cascade="all">
+        	<key column="oid"></key>
+        	<one-to-many class="OrderItem"/>
+        </set>
+    </class>
+</hibernate-mapping>

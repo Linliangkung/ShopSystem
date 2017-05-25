@@ -25,7 +25,7 @@
 					<a>[退出]</a>|
 				</li>
 						<li>
-							<a>会员中心</a>
+							<a href="${pageContext.request.contextPath }/order_orderListPage.action?page=1">我的订单</a>
 							|
 						</li>
 						<li>

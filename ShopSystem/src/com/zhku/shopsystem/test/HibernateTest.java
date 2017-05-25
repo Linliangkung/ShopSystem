@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.hibernate.Criteria;
+import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -26,6 +28,8 @@ import com.zhku.shopsystem.dao.CategoryDao;
 import com.zhku.shopsystem.domain.CartItem;
 import com.zhku.shopsystem.domain.Category;
 import com.zhku.shopsystem.domain.CategorySecond;
+import com.zhku.shopsystem.domain.Order;
+import com.zhku.shopsystem.domain.OrderItem;
 import com.zhku.shopsystem.domain.Product;
 import com.zhku.shopsystem.domain.Seller;
 import com.zhku.shopsystem.domain.User;
@@ -231,6 +235,112 @@ public class HibernateTest {
 		
 	}
 	
+	@Test
+	public void testSaveCartItem(){
+		CartItem cartItem=new CartItem();
+		Product product=new Product();
+		product.setPid(3);
+		cartItem.setProduct(product);
+		cartItem.setUser(session.get(User.class, 1));
+		
+		cartItem.setQuantity(100);
+		session.save(cartItem);
+		
+	}
+	
+	@Test
+	public void testGetInShareMode(){
+		Product product = session.get(Product.class,1,new LockOptions(LockMode.PESSIMISTIC_READ));
+		System.out.println(product.getPnum());
+	
+	}
+	
+	@Test
+	public void testSaveOrder(){
+		
+		Order order=new Order();
+		order.setAddr("广州市平沙村富力城");
+		order.setOrdertime(new Date());
+		order.setPhone("13143350142");
+		order.setSeller(session.get(Seller.class, 1));
+		order.setState(0);
+		order.setTotal(1000d);
+		order.setUser(session.get(User.class, 1));
+		
+		OrderItem orderItem=new OrderItem();
+		orderItem.setOrder(order);
+		orderItem.setProduct(session.get(Product.class, 2));
+		orderItem.setQuantity(10);
+		orderItem.setSubtotal(940d);
+		
+		order.getOrderItems().add(orderItem);
+		
+		session.save(order);
+		
+	}
+	@Test
+	public void testDeleteOrder(){
+		session.delete(session.get(Order.class,"4028b8815c39555a015c395562f50000"));
+	}
+	
+	
+	@Test
+	public void testLazy(){
+		Order order=new Order();
+		CartItem cartItem = session.get(CartItem.class,14);
+		transaction.commit();
+		transaction=session.beginTransaction();
+		
+		Product product = cartItem.getProduct();
+		OrderItem orderItem=new OrderItem();
+		orderItem.setOrder(order);
+		orderItem.setProduct(product);
+		orderItem.setQuantity(cartItem.getQuantity());
+		orderItem.setSubtotal(cartItem.getQuantity()*product.getShop_price());
+		order.getOrderItems().add(orderItem);
+		product.setPnum(product.getPnum()-cartItem.getQuantity());
+		
+		order.setAddr("广州市平沙村富力城");
+		order.setOrdertime(new Date());
+		order.setPhone("13143350142");
+		order.setState(0);
+		User user=new User();
+		user.setUid(1);
+		order.setUser(user);
+		Seller seller=new Seller();
+		seller.setSid(3);
+		order.setSeller(seller);
+		
+		session.save(order);
+		
+	}
+	
+	@Test
+	public void testProductVersion(){
+		
+		//CartItem cartItem=session.get(CartItem.class, 39);
+		Product product=session.get(Product.class, 30);
+		product.setPnum(product.getPnum()-1);
+		session.saveOrUpdate(product);
+		
+		
+	}
+	
+	@Test
+	public void testGetOrder(){
+		DetachedCriteria criteria=DetachedCriteria.forClass(Order.class);
+		criteria.add(Restrictions.eq("user.uid", 1));
+		Criteria executableCriteria = criteria.getExecutableCriteria(session);
+		System.out.println(executableCriteria.list().size());
+	}
+	
+	@Test
+	public void test(){
+		String hql="SELECT count(*) FROM Order o WHERE o.user.uid=1 ";
+		Long result=(Long) session.createQuery(hql).uniqueResult();
+		System.out.println(result);
+		
+	}
 	
 	@After
 	public void destory(){

@@ -30,6 +30,10 @@
 	<bean name="cartAction" class="com.zhku.shopsystem.web.action.CartAction" scope="prototype">
 		<property name="cartItemService" ref="cartItemService"></property>
 	</bean>
+	<bean name="orderAction" class="com.zhku.shopsystem.web.action.OrderAction" scope="prototype">
+		<property name="cartItemService" ref="cartItemService"></property>
+		<property name="orderService" ref="orderService"></property>
+	</bean>
 	
 	
 	<!-- service的配置 -->
@@ -50,6 +54,14 @@
 		<property name="productDao" ref="productDao"></property>
 	</bean>
 	
+	<bean name="orderService" class="com.zhku.shopsystem.service.impl.OrderServiceImpl">
+		<property name="cartItemDao" ref="cartItemDao"></property>
+		<property name="orderDao" ref="orderDao"></property>
+		<property name="productDao" ref="productDao"></property>
+	</bean>
+	
+	
+	
 	<!-- dao的配置 -->
 	<bean name="userDao" class="com.zhku.shopsystem.dao.impl.UserDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
@@ -64,6 +76,10 @@
 	</bean>
 	
 	<bean name="cartItemDao" class="com.zhku.shopsystem.dao.impl.CartItemDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean name="orderDao" class="com.zhku.shopsystem.dao.impl.OrderDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 引入数据库配置 -->

@@ -12,7 +12,7 @@
             <column name="quantity" />
         </property>
         <!-- 配置多对一的关系 -->
-        <many-to-one name="product" class="Product" column="pid"/>
+        <many-to-one name="product" class="Product" column="pid" />
         <!-- 配置多对一的关系 -->
         <many-to-one name="user" class="User" column="uid"/>
     </class>

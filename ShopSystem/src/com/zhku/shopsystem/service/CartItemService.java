@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zhku.shopsystem.domain.CartItem;
 import com.zhku.shopsystem.exception.MessageException;
+import com.zhku.shopsystem.utils.Cart;
 
 public interface CartItemService {
 	
@@ -44,6 +45,13 @@ public interface CartItemService {
 	 * @param uid 用户id 
 	 */
 	void deleteCartItemsByUid(Integer uid);
+	
+	/**
+	 * 根据用户id获得购物车封装对象
+	 * @param uid 用户id 
+	 * @return
+	 */
+	Cart getCartBeanByUid(Integer uid);
 	
 	
 	
