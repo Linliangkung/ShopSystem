@@ -3,10 +3,12 @@ package com.zhku.shopsystem.service.impl;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.struts2.components.DoubleListUIBean;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.type.TrueFalseType;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,6 +75,7 @@ public class OrderServiceImpl implements OrderService{
 			order.setOrdertime(new Date());
 			order.setPhone(user.getPhone());
 			order.setState(0);
+			order.setConsignee(user.getName());
 			Seller seller=new Seller();
 			seller.setSid(entryCart.getKey());
 			order.setSeller(seller);
@@ -81,6 +84,7 @@ public class OrderServiceImpl implements OrderService{
 		}
 	}
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
 	public List<Order> getOrdersByUid(Integer uid) {
 		
 		return orderDao.getOrdersByUid(uid);
@@ -88,6 +92,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
 	public PageBean getOrderPageBeanByUid(Integer page, Integer pageSize, Integer uid) {
 		//获得用户订单的总条数
 		Integer totalCount=orderDao.getOrderCountByUid(uid);
@@ -103,6 +108,66 @@ public class OrderServiceImpl implements OrderService{
 		return orderPageBean;
 	}
 	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false)
+	public void deleteOrderTimeout() {
+		//获得订单状态为0的订单
+		DetachedCriteria criteria=DetachedCriteria.forClass(Order.class);
+		criteria.add(Restrictions.eq("state", 0));
+		Integer totalCount=orderDao.getTotalCount(criteria);
+		//计算遍历次数
+		Integer frequency=(totalCount+20-1)/20;
+		for(int i=0;i<frequency;i++){
+			Integer start=i*20;
+			List<Order> orders = orderDao.getPageList(criteria, start, 20);
+			for(Order order:orders){
+				//判断订单的下单时间是否已经超时
+				long dTime=System.currentTimeMillis()-order.getOrdertime().getTime();
+				if(dTime>2*3600*1000){
+					//说明已经超时,删除订单,恢复库存
+					orderDao.delete(order);
+					for(OrderItem orderItem:order.getOrderItems()){
+						Product product=orderItem.getProduct();
+						product.setPnum(product.getPnum()+orderItem.getQuantity());
+						productDao.saveOrUpdate(product);
+					}
+				}
+			}
+		}
+	}
+	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
+	public Order getOrderByOid(String oid) {
+		return orderDao.getById(oid);
+	}
+	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false)
+	public void deleteOrderUnpay(String oid) {
+		//1.根据订单id获得订单
+		Order order = orderDao.getById(oid);
+		//2.判断订单状态是否为0
+		if(order.getState()==0){
+			//3.删除订单
+			orderDao.delete(order);
+			//4.将商品订单的库存恢复
+			Set<OrderItem> orderItems = order.getOrderItems();
+			for(OrderItem orderItem:orderItems){
+				Product product = orderItem.getProduct();
+				System.out.println(product.getVersion());
+				product.setPnum(product.getPnum()+orderItem.getQuantity());
+				productDao.saveOrUpdate(product);
+			}
+		}
+	}
+	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false)
+	public void updateOrder(Order queryOrder) {
+		orderDao.update(queryOrder);
+	}
+	
 	public void setOrderDao(OrderDao orderDao) {
 		this.orderDao = orderDao;
 	}
@@ -112,5 +177,4 @@ public class OrderServiceImpl implements OrderService{
 	public void setCartItemDao(CartItemDao cartItemDao) {
 		this.cartItemDao = cartItemDao;
 	}
-	
 }

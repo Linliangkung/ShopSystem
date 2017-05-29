@@ -31,5 +31,29 @@ public interface OrderService {
 	 * @return
 	 */
 	PageBean getOrderPageBeanByUid(Integer page, Integer pageSize, Integer uid);
+	
+	/**
+	 * 删除超时的未支付的订单,即订单状态为0的超时订单
+	 */
+	void deleteOrderTimeout();
+	
+	/**
+	 * 根据订单id查询订单
+	 * @param oid 订单id
+	 * @return
+	 */
+	Order getOrderByOid(String oid);
+	
+	/**
+	 * 根据订单id删除未支付订单
+	 * @param oid 订单id 
+	 */
+	void deleteOrderUnpay(String oid);
+	
+	/**
+	 * 更新订单
+	 * @param queryOrder
+	 */
+	void updateOrder(Order queryOrder);
 
 }

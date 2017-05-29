@@ -9,14 +9,18 @@
     <constant name="struts.devMode" value="true" />
 	<!-- 配置struts2通过Spring容器来创建action -->
 	<constant name="struts.objectFactory" value="spring" />
+	<!-- 配置struts2可以访问类静态方法 -->
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
     <package name="default" namespace="/" extends="struts-default" >
-    
+
     <!-- 配置拦截器 -->
     <interceptors>
     	<!-- 配置自动登录拦截器 -->
     	<interceptor name="autoLoginInterceptor" class="com.zhku.shopsystem.interceptor.AutoLoginInterceptor"></interceptor>
     	<!-- 配置初始化一级分类拦截器 -->
     	<interceptor name="initCategoryInterceptor" class="com.zhku.shopsystem.interceptor.InitCategoryInterceptor"></interceptor>
+    	<!-- 配置校验用户登录拦截器 -->
+    	<interceptor name="checkUserLoginInterceptor" class="com.zhku.shopsystem.interceptor.CheckUserLoginInterceptor"></interceptor>
     	<!-- 配置自定义拦截器栈 -->
     	<interceptor-stack name="myDefaultStack">
     		<interceptor-ref name="initCategoryInterceptor">
@@ -25,6 +29,7 @@
     		<interceptor-ref name="autoLoginInterceptor">
     			<param name="excludeMethods">login,logout</param>
     		</interceptor-ref>
+    		<interceptor-ref name="checkUserLoginInterceptor"/>
     		<interceptor-ref name="defaultStack"></interceptor-ref>
     	</interceptor-stack>
     </interceptors>
@@ -32,11 +37,21 @@
     <default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
 	<!-- 配置默认Action,当找不到对应action的时候,访问默认的Action -->
     	<default-action-ref name="index"></default-action-ref>
+    	
+    	<!-- 配置全局结果集 -->
+  		 <global-results>
+    		<result name="toLoginPage" type="redirectAction">
+    			<param name="actionName">user_loginPage</param>
+    			<param name="namespace">/</param>
+    		</result>
+  		 </global-results>
+    	<!-- 配置User模块的Action -->
+    	
     	<!-- 配置首页访问的Action -->
     	<action name="index" class="indexAction" method="index">
     		<result name="index">/WEB-INF/jsp/index.jsp</result>
     	</action>
-    	<!-- 配置User模块的Action -->
+    	
     	<action name="user_*" method="{1}" class="userAction">
     		<result name="registPage">/WEB-INF/jsp/regist.jsp</result>
     		<result name="loginPage">/WEB-INF/jsp/login.jsp</result>
@@ -88,6 +103,9 @@
     		</result>
     		<result name="chainToCartList" type="chain">cart_cartListPage</result>
     		<result name="orderListPage" >/WEB-INF/jsp/orderList.jsp</result>
+    		<result name="orderDetailPage">/WEB-INF/jsp/orderDetail.jsp</result>
+    		<result name="chainToOrderList" type="chain">order_orderListPage</result>
+    		<result name="msgPage">/WEB-INF/jsp/msg.jsp</result>
     	</action>
     </package>
 

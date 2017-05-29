@@ -9,6 +9,13 @@
 <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/css/cart.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+<s:if test="[2].actionErrors[0]!=null">
+$(document).ready(function(){ 
+		alert("<s:property value="[2].actionErrors[0]"/>")
+	}); 
+</s:if>
+</script>
 </head>
 <body>
 <div class="container header">
@@ -37,7 +44,7 @@
 				下单时间:<strong id="effectivePrice"><s:date name="ordertime" format="yyyy-MM-dd HH:mm:ss" /></strong><br/>
 				订单状态: <strong><font color="red">
 					<s:if test="state==0">
-						未支付
+						未支付:交易将在<s:property value="@com.zhku.shopsystem.utils.TimeUtils@getSurplusTimeMsg(ordertime)"/>被关闭
 					</s:if>
 					<s:elseif test="state==1">
 						未发货
@@ -86,15 +93,15 @@
 				</div>
 				<s:if test="state==0">
 						<div class="bottom">
-							<a  id="clear" class="clear">删除订单</a>
-							<a href="javascript:void(0);" onclick="submitOrder();" id="submit" class="submit">支付</a>
+							<a href="${pageContext.request.contextPath }/order_deleteUnpayOrder.action?oid=<s:property value="oid"/>" id="clear" class="clear">删除订单</a>
+							<a href="${pageContext.request.contextPath }/order_detail.action?oid=<s:property value="oid"/>" id="submit" class="submit">支付</a>
 						</div>
 					</s:if>
 					<s:elseif test="state==1">
 					</s:elseif>
 					<s:elseif test="state==2">
 						<div class="bottom">
-							<a href="javascript:void(0);" onclick="submitOrder();" id="submit" class="submit">确认订单</a>
+							<a href="${pageContext.request.contextPath }/order_firmOrder?oid=<s:property value="oid"/>"  id="submit" class="submit">确认订单</a>
 						</div>
 					</s:elseif>
 					<s:elseif test="state==3">

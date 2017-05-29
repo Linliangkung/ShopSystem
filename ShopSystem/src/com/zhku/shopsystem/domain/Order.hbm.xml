@@ -23,6 +23,9 @@
         <property name="phone" type="java.lang.String">
             <column name="phone" />
         </property>
+        <property name="consignee" type="java.lang.String">
+            <column name="consignee" />
+        </property>
         <many-to-one name="user" class="User" column="uid"/>
         <many-to-one name="seller" class="Seller" column="sid"/>
         <set name="orderItems" table="orderitems" inverse="true" order-by="oiid asc" cascade="all">

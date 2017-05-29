@@ -26,6 +26,7 @@ public class Order {
 	private Integer state;
 	private String addr;
 	private String phone;
+	private String consignee;
 	private User user;
 	private Seller seller;
 	private Set<OrderItem> orderItems=new HashSet<OrderItem>();
@@ -65,6 +66,12 @@ public class Order {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getConsignee() {
+		return consignee;
+	}
+	public void setConsignee(String consignee) {
+		this.consignee = consignee;
 	}
 	public User getUser() {
 		return user;

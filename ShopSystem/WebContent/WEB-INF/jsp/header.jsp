@@ -11,6 +11,10 @@
 				<li id="headerRegister" class="headerRegister" style="display: list-item;">
 					<a href="${pageContext.request.contextPath }/user_logout.action">退出</a>|
 				</li>
+				<li>
+							<a href="${pageContext.request.contextPath }/order_orderListPage.action?page=1">我的订单</a>
+							|
+				</li>
 				</s:if>
 				<s:else>
 				<li id="headerLogin" class="headerLogin" style="display: list-item;">
@@ -24,10 +28,6 @@
 				<li id="headerLogout" class="headerLogout">
 					<a>[退出]</a>|
 				</li>
-						<li>
-							<a href="${pageContext.request.contextPath }/order_orderListPage.action?page=1">我的订单</a>
-							|
-						</li>
 						<li>
 							<a>购物指南</a>
 							|

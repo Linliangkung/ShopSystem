@@ -1,8 +1,10 @@
 package com.zhku.shopsystem.test;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.mail.MessagingException;
 
@@ -10,6 +12,7 @@ import org.junit.Test;
 
 import com.zhku.shopsystem.utils.FileUtils;
 import com.zhku.shopsystem.utils.MailUtils;
+import com.zhku.shopsystem.utils.TimeUtils;
 import com.zhku.shopsystem.utils.UUIDUtils;
 
 public class TestUtils {
@@ -57,6 +60,16 @@ public class TestUtils {
 	public void testFileUtilsGetContentType(){
 		
 		System.out.println(FileUtils.getContentType("11.ico"));
+		
+	}
+	
+	@Test
+	public void testTimeUitls(){
+		
+		//System.out.println(TimeUtils.getTimeMsg(60*2000));
+		//1495768428516  2017/5/26  11:14
+		System.out.println(TimeUtils.getSurplusTimeMsg(new Date(1495768428516l-3600*1000-53*60*10000)));
+		
 		
 	}
 	
