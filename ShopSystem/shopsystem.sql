@@ -1,7 +1,7 @@
 create table users(
  	uid int primary key auto_increment,	#用户id
 	username varchar(30),	#用户名
-	password varchar(30),	#密码		
+	password varchar(50),	#密码		
 	name varchar(30),		#用户真实姓名
 	email varchar(30),		#用户邮箱
 	phone varchar(30),		#用户手机号码
@@ -27,7 +27,7 @@ create table categoryseconds(
 create table sellers(
 	sid int primary key auto_increment,#商家id
 	saccount varchar(30),   #商家账号,登录时使用的账号   
-	spassword varchar(30),  #商家密码,登录时使用的密码
+	spassword varchar(50),  #商家密码,登录时使用的密码
 	sname varchar(30),		#商家名称,显示给用户看的
 	sphone varchar(30),  	#商家联系方式(指的是手机)
 	sdesc  varchar(200)     #店铺描述

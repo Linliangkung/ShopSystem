@@ -11,6 +11,7 @@
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 配置struts2可以访问类静态方法 -->
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	<!-- 用户模块 -->
     <package name="default" namespace="/" extends="struts-default" >
 
     <!-- 配置拦截器 -->
@@ -45,13 +46,11 @@
     			<param name="namespace">/</param>
     		</result>
   		 </global-results>
-    	<!-- 配置User模块的Action -->
-    	
     	<!-- 配置首页访问的Action -->
     	<action name="index" class="indexAction" method="index">
     		<result name="index">/WEB-INF/jsp/index.jsp</result>
     	</action>
-    	
+    	<!-- 配置User模块的Action -->
     	<action name="user_*" method="{1}" class="userAction">
     		<result name="registPage">/WEB-INF/jsp/regist.jsp</result>
     		<result name="loginPage">/WEB-INF/jsp/login.jsp</result>
@@ -108,6 +107,51 @@
     		<result name="msgPage">/WEB-INF/jsp/msg.jsp</result>
     	</action>
     </package>
-
-
+	
+	<!-- 商家模块 -->
+	<package name="seller" namespace="/seller" extends="struts-default">
+		<!-- 配置拦截器 -->
+		<interceptors>
+			<!-- 配置校验商家登录拦截器 -->
+			<interceptor name="checkSellerLoginInterceptor" class="com.zhku.shopsystem.interceptor.CheckSellerLoginInterceptor"></interceptor>
+			<!-- 配置自定义拦截器栈 -->
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="checkSellerLoginInterceptor">
+						<param name="excludeMethods">login,regist,loginPage,registPage</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 配置默认拦截器栈 -->
+		<default-interceptor-ref name="myDefaultStack"></default-interceptor-ref>
+		<!-- 配置全局结果集 -->
+		<global-results>
+			<result name="toLoginPage" type="redirectAction">
+				<param name="actionName">seller_loginPage</param>
+    			<param name="namespace">/seller</param>
+			</result>
+		</global-results>
+		<!-- 配置Seller模块的Action -->
+		<action name="seller_*" method="{1}" class="sellerAction">
+			<result name="loginPage">/WEB-INF/seller/login.jsp</result>
+			<result name="registPage">/WEB-INF/seller/regist.jsp</result>
+			<result name="toLoginPage" type="redirectAction">
+				<param name="actionName">seller_loginPage</param>
+    			<param name="namespace">/seller</param>
+			</result>
+			<result name="loginSuccess" type="redirectAction">
+				<param name="actionName">sellerHome_homePage</param>
+    			<param name="namespace">/seller</param>
+			</result>
+		</action>
+		
+		<!-- 配置Seller主页模块的Action -->
+		<action name="sellerHome_*" method="{1}" class="sellerHomeAction">
+			<result name="homePage">/WEB-INF/seller/home.jsp</result>
+			<result name="topPage">/WEB-INF/seller/top.jsp</result>
+			<result name="leftPage">/WEB-INF/seller/left.jsp</result>
+			<result name="welcomePage">/WEB-INF/seller/welcome.jsp</result>
+			<result name="bottomPage">/WEB-INF/seller/bottom.jsp</result>
+		</action>	
+	</package>
 </struts>

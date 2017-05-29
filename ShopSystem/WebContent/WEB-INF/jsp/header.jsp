@@ -23,6 +23,10 @@
 				<li id="headerRegister" class="headerRegister" style="display: list-item;">
 					<a href="${pageContext.request.contextPath }/user_registPage.action">注册</a>|
 				</li>
+				
+				<li id="headerRegister" class="headerRegister" style="display: list-item;">
+					<a href="${pageContext.request.contextPath }/seller/seller_loginPage.action">商家登录</a>|
+				</li>
 				</s:else>
 				<li id="headerUsername" class="headerUsername"></li>
 				<li id="headerLogout" class="headerLogout">
