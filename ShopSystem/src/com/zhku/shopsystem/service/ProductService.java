@@ -61,5 +61,19 @@ public interface ProductService {
 	 * @param product 商品
 	 */
 	void updateProduct(Product product);
+	
+	/**
+	 * 根据热门商品的降序获得商品的分页显示对象
+	 * @param page 当前页数
+	 * @param pageSize 每页显示条数
+	 * @return
+	 */
+	PageBean getProductPageBeanOrderByIsHotDesc(Integer page, Integer pageSize);
+	
+	/**
+	 * 获取热门商品的个数
+	 * @return
+	 */
+	Integer getHotProductCount();
 
 }

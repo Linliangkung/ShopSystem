@@ -82,4 +82,10 @@ create table orderitems(
 	foreign key (oid) references orders (oid)
 );
 
+create table admins(
+	aid int primary key auto_increment,#管理员id
+	aaccount varchar(30),   #管理员账号,登录时使用的账号   
+	apassword varchar(50)   #管理员密码,登录时使用的密码   
+);
+
 

@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import org.junit.Test;
 
 import com.zhku.shopsystem.utils.FileUtils;
+import com.zhku.shopsystem.utils.MD5Utils;
 import com.zhku.shopsystem.utils.MailUtils;
 import com.zhku.shopsystem.utils.TimeUtils;
 import com.zhku.shopsystem.utils.UUIDUtils;
@@ -71,6 +72,11 @@ public class TestUtils {
 		System.out.println(TimeUtils.getSurplusTimeMsg(new Date(1495768428516l-3600*1000-53*60*10000)));
 		
 		
+	}
+	
+	@Test
+	public void testMd5Utils(){
+		System.out.println(MD5Utils.md5("admin"));
 	}
 	
 }

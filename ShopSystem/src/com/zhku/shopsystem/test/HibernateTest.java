@@ -25,6 +25,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.zhku.shopsystem.dao.CategoryDao;
+import com.zhku.shopsystem.domain.Admin;
 import com.zhku.shopsystem.domain.CartItem;
 import com.zhku.shopsystem.domain.Category;
 import com.zhku.shopsystem.domain.CategorySecond;
@@ -335,11 +336,13 @@ public class HibernateTest {
 	}
 	
 	@Test
-	public void test(){
-		String hql="SELECT count(*) FROM Order o WHERE o.user.uid=1 ";
-		Long result=(Long) session.createQuery(hql).uniqueResult();
-		System.out.println(result);
+	public void testGetAdmin(){
 		
+		DetachedCriteria criteria=DetachedCriteria.forClass(Admin.class);
+		criteria.add(Restrictions.eq("aaccount", "admin"));
+		Criteria executableCriteria = criteria.getExecutableCriteria(session);
+		Admin admin= (Admin) executableCriteria.uniqueResult();
+		System.out.println(admin.getAaccount());
 	}
 	
 	@After

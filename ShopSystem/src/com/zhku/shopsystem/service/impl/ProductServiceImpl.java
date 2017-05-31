@@ -93,6 +93,21 @@ public class ProductServiceImpl implements ProductService {
 		return productPageBean;
 	}
 	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
+	public PageBean getProductPageBeanOrderByIsHotDesc(Integer page, Integer pageSize) {
+		//获得商品的总条数
+		DetachedCriteria criteria=DetachedCriteria.forClass(Product.class);
+		criteria.addOrder(Order.desc("is_hot"));
+		Integer totalCount=productDao.getTotalCount(criteria);
+		//创建PageBean
+		PageBean productPageBean=new PageBean(page, totalCount, pageSize);
+		//获得商品的分页集合
+		List<Product> products=productDao.getPageList(criteria,productPageBean.getStart(), productPageBean.getPageSize());
+		productPageBean.setList(products);
+		return productPageBean;
+	}
+	
 	
 	
 	@Override
@@ -108,11 +123,16 @@ public class ProductServiceImpl implements ProductService {
 		productDao.update(product);
 	}
 	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
+	public Integer getHotProductCount() {
+		DetachedCriteria criteria=DetachedCriteria.forClass(Product.class);
+		criteria.add(Restrictions.eq("is_hot", '1'));
+		return productDao.getTotalCount(criteria);
+	}
+	
 	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;
 	}
 
-
-
-	
 }

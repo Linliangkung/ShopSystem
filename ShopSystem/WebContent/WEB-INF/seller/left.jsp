@@ -39,10 +39,10 @@
 		d.add('010101','0101','添加商品','${pageContext.request.contextPath}/seller/sellerProduct_addPage.action','','mainFrame');
 		d.add('010102','0101','商品列表','${pageContext.request.contextPath}/seller/sellerProduct_listProductPage.action?page=1','','mainFrame');
 		d.add('0102','01','订单管理','${pageContext.request.contextPath}/seller/sellerHome_welcomePage.action','','mainFrame');
-		d.add('010201','0102','待支付订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=0','','mainFrame');
-		d.add('010202','0102','已支付订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=1','','mainFrame');
-		d.add('010203','0102','待收货订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=2','','mainFrame');
-		d.add('010204','0102','已确认订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=3','','mainFrame');
+		d.add('010201','0102','待支付订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=0&page=1','','mainFrame');
+		d.add('010202','0102','已支付订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=1&page=1','','mainFrame');
+		d.add('010203','0102','待收货订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=2&page=1','','mainFrame');
+		d.add('010204','0102','已确认订单','${pageContext.request.contextPath}/seller/sellerOrder_listOrderPage.action?state=3&page=1','','mainFrame');
 		document.write(d);
 	</script>
 </div>	</td>

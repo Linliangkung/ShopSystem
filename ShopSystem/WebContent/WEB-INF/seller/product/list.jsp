@@ -56,6 +56,9 @@
 									<td align="center" width="23%">
 										市场价格
 									</td>
+									<td align="center" width="11%">
+										库存
+									</td>
 									<td width="7%" align="center">
 										编辑
 									</td>
@@ -85,6 +88,10 @@
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="23%">
 												<s:property value="market_price"/>
+											</td>
+											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+												width="11%">
+												<s:property value="pnum"/>
 											</td>
 											<td align="center" style="HEIGHT: 22px">
 												<a href="${pageContext.request.contextPath}/seller/sellerProduct_editProductPage.action?pid=<s:property value="pid"/>">

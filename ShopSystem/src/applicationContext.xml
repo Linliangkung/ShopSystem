@@ -55,6 +55,26 @@
 		<property name="orderService" ref="orderService"></property>
 	</bean>
 	
+	<bean name="adminAction" class="com.zhku.shopsystem.web.action.AdminAction" scope="prototype">
+		<property name="adminService" ref="adminService"></property>
+	</bean>
+	
+	<bean name="adminHomeAction" class="com.zhku.shopsystem.web.action.AdminHomeAction" scope="prototype">
+	</bean>
+	
+	<bean name="adminCategoryAction" class="com.zhku.shopsystem.web.action.AdminCategoryAction" scope="prototype">
+		<property name="categoryService" ref="categoryService"></property>
+	</bean>
+	
+	<bean name="adminCategorySecondAction" class="com.zhku.shopsystem.web.action.AdminCategorySecondAction" scope="prototype">
+		<property name="categorySecondService" ref="categorySecondService"></property>
+		<property name="categoryService" ref="categoryService"></property>
+	</bean>
+
+	<bean name="adminProductAction" class="com.zhku.shopsystem.web.action.AdminProductAction" scope="prototype">
+		<property name="productService" ref="productService"></property>
+	</bean>
+	
 	<!-- service的配置 -->
 	<bean name="userService" class="com.zhku.shopsystem.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao"></property>
@@ -62,6 +82,7 @@
 	
 	<bean name="categoryService" class="com.zhku.shopsystem.service.impl.CategoryServiceImpl">
 		<property name="categoryDao" ref="categoryDao"></property>
+		<property name="categorySecondDao" ref="categorySecondDao"></property>
 	</bean>
 
 	<bean name="productService" class="com.zhku.shopsystem.service.impl.ProductServiceImpl">
@@ -85,6 +106,10 @@
 	
 	<bean name="categorySecondService" class="com.zhku.shopsystem.service.impl.CategorySecondServiceImpl">
 		<property name="categorySecondDao" ref="categorySecondDao"></property>
+	</bean>
+
+	<bean name="adminService" class="com.zhku.shopsystem.service.impl.AdminServiceImpl">
+		<property name="adminDao" ref="adminDao"></property>
 	</bean>
 	
 	
@@ -115,6 +140,10 @@
 	</bean>
 
 	<bean name="categorySecondDao" class="com.zhku.shopsystem.dao.impl.CategorySecondDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean name="adminDao" class="com.zhku.shopsystem.dao.impl.AdminDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 引入数据库配置 -->

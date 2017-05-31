@@ -27,7 +27,7 @@
 								<tr
 									style="FONT-WEIGHT: bold; FONT-SIZE: 12pt; HEIGHT: 25px; BACKGROUND-COLOR: #afd1f3">
 
-									<td align="left" width="10%" colspan="5">
+									<td align="left" width="10%" colspan="6">
 										订单号:<s:property value="oid"/> &nbsp;&nbsp;&nbsp;&nbsp;
 										订单金额:<s:property value="total"/> &nbsp;&nbsp;&nbsp;&nbsp;
 										下单时间:<s:date name="ordertime" format="yyyy-MM-dd HH:mm:ss"/> &nbsp;&nbsp;&nbsp;&nbsp;
@@ -66,6 +66,10 @@
 												数量
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+												width="10%">
+												单价
+											</td>
+											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="23%">
 												小计 
 											</td>
@@ -89,6 +93,10 @@
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="8%">
 												<s:property value="quantity"/>
+											</td>
+											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
+												width="10%">
+												<s:property value="product.shop_price"/>
 											</td>
 											<td style="CURSOR: hand; HEIGHT: 22px" align="center"
 												width="23%">
