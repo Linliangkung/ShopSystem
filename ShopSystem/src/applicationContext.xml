@@ -6,35 +6,53 @@
 		<property name="categoryService" ref="categoryService"></property>
 		<property name="productService" ref="productService"></property>
 	</bean>
+	
 	<bean name="userAction" class="com.zhku.shopsystem.web.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService"></property>
 	</bean>
+	
 	<bean name="loadProductImageAction" class="com.zhku.shopsystem.web.action.LoadProductImageAction" scope="prototype">
 		<property name="productService" ref="productService"></property>
 	</bean>
+	
 	<bean name="categoryAction" class="com.zhku.shopsystem.web.action.CategoryAction" scope="prototype">
 		<property name="productService" ref="productService"></property>
 		<property name="categoryService" ref="categoryService"></property>
 	</bean>
+	
 	<bean name="productAction" class="com.zhku.shopsystem.web.action.ProductAction" scope="prototype">
 		<property name="productService" ref="productService"></property>
 		<property name="categoryService" ref="categoryService"></property>
 	</bean>
+	
 	<bean name="categorySecondAction" class="com.zhku.shopsystem.web.action.CategorySecondAction" scope="prototype">
 		<property name="productService" ref="productService"></property>
 		<property name="categoryService" ref="categoryService"></property>
 	</bean>
+	
 	<bean name="cartAction" class="com.zhku.shopsystem.web.action.CartAction" scope="prototype">
 		<property name="cartItemService" ref="cartItemService"></property>
 	</bean>
+	
 	<bean name="orderAction" class="com.zhku.shopsystem.web.action.OrderAction" scope="prototype">
 		<property name="cartItemService" ref="cartItemService"></property>
 		<property name="orderService" ref="orderService"></property>
 	</bean>
+	
 	<bean name="sellerAction" class="com.zhku.shopsystem.web.action.SellerAction" scope="prototype">
 		<property name="sellerService" ref="sellerService"></property>
 	</bean>
+	
 	<bean name="sellerHomeAction" class="com.zhku.shopsystem.web.action.SellerHomeAction" scope="prototype">
+	</bean>
+	
+	<bean name="sellerProductAction" class="com.zhku.shopsystem.web.action.SellerProductAction" scope="prototype">
+		<property name="productService" ref="productService"></property>
+		<property name="categorySecondService" ref="categorySecondService"></property>
+	</bean>
+	
+	<bean name="sellerOrderAction" class="com.zhku.shopsystem.web.action.SellerOrderAction" scope="prototype">
+		<property name="orderService" ref="orderService"></property>
 	</bean>
 	
 	<!-- service的配置 -->
@@ -65,6 +83,10 @@
 		<property name="sellerDao" ref="sellerDao"></property>
 	</bean>
 	
+	<bean name="categorySecondService" class="com.zhku.shopsystem.service.impl.CategorySecondServiceImpl">
+		<property name="categorySecondDao" ref="categorySecondDao"></property>
+	</bean>
+	
 	
 	
 	<!-- dao的配置 -->
@@ -89,6 +111,10 @@
 	</bean>
 
 	<bean name="sellerDao" class="com.zhku.shopsystem.dao.impl.SellerDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean name="categorySecondDao" class="com.zhku.shopsystem.dao.impl.CategorySecondDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<!-- 引入数据库配置 -->

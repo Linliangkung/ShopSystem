@@ -5,10 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.struts2.components.DoubleListUIBean;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.type.TrueFalseType;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,8 +24,6 @@ import com.zhku.shopsystem.exception.MessageException;
 import com.zhku.shopsystem.service.OrderService;
 import com.zhku.shopsystem.utils.Cart;
 import com.zhku.shopsystem.utils.PageBean;
-
-import sun.text.normalizer.UBiDiProps;
 
 public class OrderServiceImpl implements OrderService{
 	private OrderDao orderDao;
@@ -109,6 +105,22 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
+	public PageBean getOrderPageBeanBySidAndState(Integer page, Integer pageSize, Integer sid, Integer state) {
+		//根据订单状态和商家id获得订单总条数
+		DetachedCriteria criteria=DetachedCriteria.forClass(Order.class);
+		criteria.add(Restrictions.eq("seller.sid", sid)).add(Restrictions.eq("state",state));
+		Integer totalCount=orderDao.getTotalCount(criteria);
+		//创建orderPageBean
+		PageBean orderPageBean=new PageBean(page, totalCount, pageSize);
+		//根据订单状态和商家id获得订单集合
+		criteria.addOrder(org.hibernate.criterion.Order.desc("ordertime"))	;
+		List<Order> orders=orderDao.getPageList(criteria, orderPageBean.getStart(),orderPageBean.getPageSize());
+		orderPageBean.setList(orders);
+		return orderPageBean;
+	}
+	
+	@Override
 	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false)
 	public void deleteOrderTimeout() {
 		//获得订单状态为0的订单
@@ -177,4 +189,5 @@ public class OrderServiceImpl implements OrderService{
 	public void setCartItemDao(CartItemDao cartItemDao) {
 		this.cartItemDao = cartItemDao;
 	}
+
 }

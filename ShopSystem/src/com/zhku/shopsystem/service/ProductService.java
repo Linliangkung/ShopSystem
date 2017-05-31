@@ -40,5 +40,26 @@ public interface ProductService {
 	 * @return
 	 */
 	PageBean getProductPageBeanByCsid(Integer page, Integer pageSize, Integer csid);
+	
+	/**
+	 * 根据商家id获取商品的分页bean
+	 * @param page 当前页数
+	 * @param pageSize 每页显示条数
+	 * @param sid 商家id
+	 * @return  
+	 */
+	PageBean getProuctPageBeanBySid(Integer page, Integer pageSize, Integer sid);
+	
+	/**
+	 * 添加商品
+	 * @param product 商品
+	 */
+	void addProduct(Product product);
+	
+	/**
+	 * 更新商品信息 
+	 * @param product 商品
+	 */
+	void updateProduct(Product product);
 
 }

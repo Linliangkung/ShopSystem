@@ -11,8 +11,11 @@
 	<constant name="struts.objectFactory" value="spring" />
 	<!-- 配置struts2可以访问类静态方法 -->
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true"/>
+	<!-- 配置是上传文件总大小的配置(10M) -->
+	<constant name="struts.multipart.maxSize" value="10485760"></constant>
 	<!-- 用户模块 -->
     <package name="default" namespace="/" extends="struts-default" >
+    
 
     <!-- 配置拦截器 -->
     <interceptors>
@@ -153,5 +156,25 @@
 			<result name="welcomePage">/WEB-INF/seller/welcome.jsp</result>
 			<result name="bottomPage">/WEB-INF/seller/bottom.jsp</result>
 		</action>	
+		
+		<!-- 配置商家管理商品的Action -->
+		<action name="sellerProduct_*" method="{1}" class="sellerProductAction">
+			<result name="listProductPage">/WEB-INF/seller/product/list.jsp</result>
+			<result name="addPage">/WEB-INF/seller/product/add.jsp</result>
+			<result name="editProductPage">/WEB-INF/seller/product/edit.jsp</result>
+			<result name="toListProductPage" type="redirectAction">
+				<param name="actionName">sellerProduct_listProductPage</param>
+    			<param name="namespace">/seller</param>
+			</result>
+		</action>
+		
+		<!-- 配置商家管理订单的Action -->
+		<action name="sellerOrder_*" method="{1}" class="sellerOrderAction">
+			<result name="listOrderPage">/WEB-INF/seller/order/list.jsp</result>
+			<result name="toListOrderPage" type="redirectAction">
+				<param name="actionName">sellerOrder_listOrderPage?state=${state}&amp;page=${page}</param>
+    			<param name="namespace">/seller</param>
+			</result>
+		</action>
 	</package>
 </struts>

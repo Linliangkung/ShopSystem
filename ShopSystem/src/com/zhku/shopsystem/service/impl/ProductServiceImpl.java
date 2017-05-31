@@ -55,7 +55,6 @@ public class ProductServiceImpl implements ProductService {
 		PageBean productPageBean=new PageBean(page, totalCount, pageSize);
 		//获得一级分类的商品的集合
 		List<Product> products=productDao.getPageProductByCid(productPageBean.getStart(),productPageBean.getPageSize(),cid);
-		
 		productPageBean.setList(products);
 		
 		return productPageBean;
@@ -78,6 +77,36 @@ public class ProductServiceImpl implements ProductService {
 		return productPageBean;
 	}
 	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=true)
+	public PageBean getProuctPageBeanBySid(Integer page, Integer pageSize, Integer sid) {
+		//根据商家id获得商品的总条数
+		DetachedCriteria criteria=DetachedCriteria.forClass(Product.class);
+		criteria.add(Restrictions.eq("seller.sid", sid));
+		Integer totalCount = productDao.getTotalCount(criteria);
+		//创建PageBean
+		PageBean productPageBean=new PageBean(page, totalCount, pageSize);
+		//根据商家id获得商品的集合
+		List<Product> products=productDao.getPageList(criteria, productPageBean.getStart(), productPageBean.getPageSize());
+		productPageBean.setList(products);
+		
+		return productPageBean;
+	}
+	
+	
+	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false)
+	public void addProduct(Product product) {
+		productDao.save(product);
+	}
+	
+	
+	@Override
+	@Transactional(isolation=Isolation.READ_COMMITTED,propagation=Propagation.REQUIRED,readOnly=false)
+	public void updateProduct(Product product) {
+		productDao.update(product);
+	}
 	
 	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;
@@ -85,8 +114,5 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-
-
-	
 	
 }

@@ -55,5 +55,15 @@ public interface OrderService {
 	 * @param queryOrder
 	 */
 	void updateOrder(Order queryOrder);
+	
+	/**
+	 * 根据商家id和订单状态，获取订单分页对象
+	 * @param page
+	 * @param pageSize
+	 * @param sid
+	 * @param state
+	 * @return 
+	 */
+	PageBean getOrderPageBeanBySidAndState(Integer page, Integer pageSize, Integer sid, Integer state);
 
 }

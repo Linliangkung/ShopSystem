@@ -10,6 +10,18 @@
 <link href="${pageContext.request.contextPath}/css/login.css" rel="stylesheet" type="text/css">
 <!-- 表单验证信息错误提示样式 -->
 <link href="${pageContext.request.contextPath}/css/error.css" rel="stylesheet" type="text/css"/>
+
+<script type="text/javascript">
+	
+	window.onload=function(){
+		if(window.parent!=window){
+			window.parent.location.href="${pageContext.request.contextPath}/seller/seller_loginPage.action"
+		}
+		
+	}
+
+</script>
+
 </head>
 <body>
 
