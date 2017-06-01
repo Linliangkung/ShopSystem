@@ -1,5 +1,6 @@
 package com.zhku.shopsystem.test;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -26,7 +27,7 @@ public class TestUtils {
 	}
 	
 	@Test
-	public void testMailUtils(){
+	public void testMailUtils() {
 		try {
 			MailUtils.sendMail("359270069@qq.com", "3e488a99819d404cadace7090cc9cfae","林良劲");
 		} catch (MessagingException e) {

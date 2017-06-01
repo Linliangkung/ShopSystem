@@ -30,8 +30,8 @@ create table sellers(
 	spassword varchar(50),  #商家密码,登录时使用的密码
 	sname varchar(30),		#商家名称,显示给用户看的
 	sphone varchar(30),  	#商家联系方式(指的是手机)
-	sdesc  varchar(200)     #店铺描述
-	registdate date,		#店铺注册的时间
+	sdesc  varchar(200),     #店铺描述
+	registdate date		#店铺注册的时间
 );
 
 create table products(

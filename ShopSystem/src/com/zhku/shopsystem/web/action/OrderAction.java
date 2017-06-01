@@ -116,7 +116,7 @@ public class OrderAction extends ActionSupport implements ModelDriven<Order>{
 			String p5_Pid="";
 			String p6_Pcat="";
 			String p7_Pdesc="";
-			String p8_Url="http://localhost/ShopSystem/order_payCallBack.action";
+			String p8_Url="http://123.207.111.117/ShopSystem/order_payCallBack.action";
 			String p9_SAF="";
 			String pa_MP="";
 			String pd_FrpId=this.pd_FrpId;

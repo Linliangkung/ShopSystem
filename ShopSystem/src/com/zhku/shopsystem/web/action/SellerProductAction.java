@@ -62,11 +62,11 @@ public class SellerProductAction extends ActionSupport implements ModelDriven<Pr
 		String hashStr = Integer.toHexString(uuidname.hashCode());
 		String path = "WEB-INF/products";
 		for (char c : hashStr.toCharArray()) {
-			realpath += "\\" + c;
+			realpath += "/" + c;
 			path += "/" + c;
 		}
 		path += "/" + uuidname;
-		realpath += "\\" + uuidname;
+		realpath += "/" + uuidname;
 		FileUtils.copyFile(image, new File(realpath));
 		System.out.println(realpath);
 		System.out.println(path);
@@ -101,11 +101,11 @@ public class SellerProductAction extends ActionSupport implements ModelDriven<Pr
 		String hashStr = Integer.toHexString(uuidname.hashCode());
 		String path = "WEB-INF/products";
 		for (char c : hashStr.toCharArray()) {
-			realpath += "\\" + c;
+			realpath += "/" + c;
 			path += "/" + c;
 		}
 		path += "/" + uuidname;
-		realpath += "\\" + uuidname;
+		realpath += "/" + uuidname;
 		FileUtils.copyFile(image, new File(realpath));
 		System.out.println(realpath);
 		System.out.println(path);

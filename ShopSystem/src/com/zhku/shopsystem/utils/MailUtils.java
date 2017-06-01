@@ -1,5 +1,6 @@
 package com.zhku.shopsystem.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -11,6 +12,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 
 
@@ -23,13 +25,14 @@ public class MailUtils {
 	public static String PASSWORD="linliangjin";
 	public static String SUBJECT="来自SHOP的官网激活邮件";
 	public static String IP_ADDRESS="10.50.63.51";
-	public static String ACTIVE_URL="http://10.50.63.51/ShopSystem/user_active.action?code=";
+	public static String ACTIVE_URL="http://123.207.111.117/ShopSystem/user_active.action?code=";
 	
 	/**
 	 * 发送邮件
 	 * @param to 收件人地址
 	 * @param code 注册用户的激活码
 	 * @throws MessagingException 
+	 * @throws UnsupportedEncodingException 
 	 */
 	public static void sendMail(String to,String code,String name) throws MessagingException{
 		//1.创建Properties 对象，设置连接stmp服务器的参数
@@ -50,10 +53,15 @@ public class MailUtils {
 		//3.创建邮件Message对象
 		Message message=new MimeMessage(session);
 		//设置主题(标题)
-		message.setSubject(SUBJECT);
+		try {
+			message.setSubject(MimeUtility.encodeText(SUBJECT,"UTF-8",null));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		//设置正文内容
 		String url=MailUtils.ACTIVE_URL+code;
-		message.setText("恭喜您,"+name+",注册SHOP账户成功!请点击链接去激活你的账户,如果无法点击请复制链接到浏览器访问,链接如下:"+url);
+		String text="恭喜您,"+name+",注册SHOP账户成功!请点击链接去激活你的账户,如果无法点击请复制链接到浏览器访问,链接如下:"+url;
+		message.setContent(text, "text/html;charset=UTF-8");
 		//设置发件人
 		message.setFrom(new InternetAddress(MailUtils.ACCOUNT));
 		//4.创建传输对象Transport 
