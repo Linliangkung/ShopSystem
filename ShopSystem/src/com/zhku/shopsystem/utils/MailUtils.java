@@ -25,7 +25,7 @@ public class MailUtils {
 	public static String PASSWORD="linliangjin";
 	public static String SUBJECT="来自SHOP的官网激活邮件";
 	public static String IP_ADDRESS="10.50.63.51";
-	public static String ACTIVE_URL="http://123.207.111.117/ShopSystem/user_active.action?code=";
+	public static String ACTIVE_URL="http://127.0.0.1/ShopSystem/user_active.action?code=";
 	
 	/**
 	 * 发送邮件
